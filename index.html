@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCC Content Creation Club — Advanced Publishing Platform</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+Bengali:wght@400;700&family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* -------------------------
+           Theme variables (dynamic)
+           ------------------------- */
+        :root {
+            --bg-grad-1: #071029;
+            --bg-grad-2: #0b2447;
+            --primary: #6a11cb;       /* accent gradient start */
+            --accent: #ffb86b;        /* accent 2 */
+            --card-bg: rgba(255,255,255,0.04);
+            --muted: rgba(230,238,248,0.7);
+            --text-color: #e6eef8;
+            --paper-bg: #fff;
+            --paper-text: #061124;
+            --site-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            --site-font-bn: "Noto Sans Bengali", sans-serif;
+            --glass: rgba(255,255,255,0.06);
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --gaming-glow: 0 0 10px rgba(106, 17, 203, 0.6);
+        }
+
+        /* -------------------------
+           Reset & base
+           ------------------------- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: var(--site-font); }
+        body {
+            background:
+                radial-gradient(1200px 600px at 10% 10%, rgba(106,17,203,0.12), transparent),
+                radial-gradient(800px 400px at 90% 90%, rgba(11,61,145,0.08), transparent),
+                linear-gradient(180deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+            color: var(--text-color);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 28px;
+            transition: background 300ms ease, color 180ms ease, font-family 200ms;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Gaming elements */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-effect {
+            box-shadow: var(--gaming-glow);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .glow-effect:hover {
+            box-shadow: 0 0 15px rgba(106, 17, 203, 0.8), 0 0 25px rgba(255, 184, 107, 0.4);
+        }
+
+        /* App container */
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* --------------
+           HERO / LOGIN GATE
+           -------------- */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 28px;
+            align-items: stretch;
+        }
+        
+        .hero-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
+            min-height: 220px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .18s;
+        }
+        
+        .hero-left h1 {
+            font-size: 30px;
+            letter-spacing: -0.02em;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+            line-height: 1.02;
+        }
+        
+        .hero-left p { color: var(--muted); margin: 8px 0 16px; }
+        
+        .hero-stats {
+            display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+        }
+        
+        .stat {
+            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding: 12px 14px; border-radius: 12px; min-width: 120px; text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+        }
+        
+        .stat strong { display: block; font-size: 20px; font-weight: 700; color: var(--text-color) }
+        .stat span { display: block; color: var(--muted); font-size: 13px }
+
+        /* Hero right - login card */
+        .login-card {
+            padding: 20px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        
+        .brand {
+            display: flex; gap: 12px; align-items: center; margin-bottom: 6px;
+        }
+        
+        .logo {
+            width: 56px; height: 56px; border-radius: 12px;
+            background: conic-gradient(from 180deg at 50% 50%, #6a11cb, #2575fc, #34d399, #ffb86b);
+            display: flex; align-items: center; justify-content: center; font-weight: 800; color: #021124;
+            box-shadow: 0 8px 30px rgba(6,9,19,0.6), inset 0 2px 6px rgba(255,255,255,0.12);
+            font-family: var(--site-font);
+        }
+        
+        .brand h3 { margin: 0; font-size: 16px }
+        .brand p { margin: 0; font-size: 12px; color: var(--muted) }
+
+        .input { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); background: transparent; color: inherit; margin: 8px 0; outline: none }
+        
+        .btn {
+            display: inline-block; padding: 10px 14px; border-radius: 12px; border: none; cursor: pointer; font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--primary)); color: #06101b; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform .12s ease, box-shadow .12s;
+        }
+        
+        .btn:active { transform: translateY(1px) }
+        .btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: var(--muted) }
+        .btn.success { background: linear-gradient(90deg, var(--success), #22c55e) }
+        .btn.warning { background: linear-gradient(90deg, var(--warning), #f59e0b) }
+        .btn.danger { background: linear-gradient(90deg, var(--danger), #ef4444) }
+        
+        .small { font-size: 13px; color: var(--muted) }
+
+        /* -------------
+           Main layout
+           ------------- */
+        .layout { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start }
+        
+        .sidebar {
+            background: var(--glass); padding: 18px; border-radius: 14px; min-height: 520px;
+            box-shadow: 0 10px 30px rgba(3,6,17,0.6);
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        
+        .profile {
+            display: flex; gap: 12px; align-items: center; margin-bottom: 6px;
+        }
+        
+        .avatar {
+            width: 58px; height: 58px; border-radius: 12px; 
+            background: linear-gradient(180deg, #fff2 0, #fff0 100%); 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-info small { color: var(--muted) }
+        
+        .nav { margin-top: 8px; display: flex; flex-direction: column; gap: 6px }
+        .nav a { display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 10px; margin-bottom: 8px; color: var(--muted); text-decoration: none }
+        .nav a:hover { background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); color: #fff }
+        .nav a.active { background: linear-gradient(90deg, var(--primary), var(--accent)); color: #071124; font-weight: 700 }
+
+        /* content */
+        .content {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius: 14px; padding: 18px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            min-height: 520px;
+        }
+
+        /* categories & cards */
+        .categories {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 16px;
+        }
+        
+        .cat {
+            padding: 12px; border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+            box-shadow: 0 8px 20px rgba(0,0,0,0.45); cursor: pointer; transition: transform .18s, box-shadow .18s;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        
+        .cat:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.5) }
+        .cat h4 { margin: 0 0 6px 0; font-weight: 700 }
+        .cat p { margin: 0; color: var(--muted); font-size: 13px }
+
+        .posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 12px }
+        
+        .post {
+            background: var(--card-bg); padding: 12px; border-radius: 12px; min-height: 180px; display: flex; flex-direction: column; gap: 10px;
+            transition: transform .12s, box-shadow .12s;
+        }
+        
+        .post:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.45) }
+        .post .meta { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--muted) }
+        .post .title { font-weight: 700 }
+        .post .excerpt { flex: 1; color: var(--muted); font-size: 13px }
+        .post img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px }
+
+        /* editor */
+        .editor-toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px }
+        .editor-toolbar button { padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04); background: transparent; color: var(--muted); cursor: pointer }
+        .editor { min-height: 220px; padding: 14px; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.04); background: rgba(0,0,0,0.02); overflow: auto }
+
+        /* magazine */
+        .magazine {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 16px;
+        }
+        
+        .newspaper {
+            background: linear-gradient(180deg, #fff2 0, transparent 40%);
+            padding: 18px; border-radius: 12px; color: var(--paper-text);
+            background-color: var(--paper-bg);
+            min-height: 420px; overflow: auto;
+            box-shadow: 0 10px 30px rgba(2,6,23,0.25);
+        }
+        
+        .paper-article {
+            margin-bottom: 18px; border-bottom: 1px solid rgba(6,17,36,0.06); padding-bottom: 12px;
+        }
+        
+        .paper-article h3 { margin: 0 0 8px 0; font-family: "Roboto Slab", serif }
+        .paper-article p { margin: 0; color: #123 }
+        
+        .mag-cover {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; margin-bottom: 14px;
+        }
+        
+        .mag-cover .hero-img { height: 220px; background-size: cover; border-radius: 10px; box-shadow: 0 14px 40px rgba(0,0,0,0.18) }
+        .mag-cover .meta { padding: 8px; background: linear-gradient(180deg, #fff, #fff0); border-radius: 10px; color: #123 }
+
+        .right-col { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding: 14px; border-radius: 12px }
+        .notice { padding: 12px; border-radius: 10px; background: linear-gradient(90deg, #ffefc9, #ffe6ff); color: #09101b; margin-bottom: 12px }
+
+        /* viewer modal */
+        .modal {
+            position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(90deg, rgba(4,7,18,0.6), rgba(4,7,18,0.85));
+            z-index: 9999; padding: 18px; opacity: 0; pointer-events: none; transition: opacity .18s;
+        }
+        
+        .modal.open { opacity: 1; pointer-events: auto }
+        
+        .modal .card {
+            width: 100%; max-width: 980px; background: var(--paper-bg); border-radius: 12px; padding: 18px; color: var(--paper-text);
+            box-shadow: 0 30px 80px rgba(2,6,23,0.7); max-height: 86vh; overflow: auto; position: relative;
+        }
+        
+        .modal .card header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px }
+        .meta-tag { font-size: 12px; color: #3b3b3b }
+
+        /* close X */
+        .close-x {
+            position: absolute; right: 14px; top: 12px; background: transparent; border: none; font-weight: 700; font-size: 18px; padding: 6px;
+            cursor: pointer; border-radius: 8px; color: var(--muted)
+        }
+        
+        .close-x:hover { background: rgba(0,0,0,0.04); color: var(--text-color) }
+
+        /* settings panel */
+        .settings-panel { padding: 12px; border-radius: 10px; background: linear-gradient(90deg, #fff2, #fff0); color: #061124 }
+        .settings-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px }
+        .color-input { height: 40px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); padding: 6px }
+
+        /* Search bars */
+        .search-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.2);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        /* Admin panel */
+        .admin-panel {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        
+        .admin-section {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+        
+        .admin-section h3 {
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+        
+        .user-list {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        /* Profile page */
+        .profile-header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-details {
+            flex: 1;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat .count {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .profile-stat .label {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        
+        /* Magazine editions */
+        .edition-list {
+            display: grid;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .edition-item {
+            background: rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .edition-info h4 {
+            margin-bottom: 6px;
+        }
+        
+        .edition-info p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+        
+        /* Content type specific forms */
+        .content-type-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .content-type-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .content-type-btn.active {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: #071124;
+            font-weight: 600;
+        }
+        
+        .content-specific-fields {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 12px;
+        }
+
+        /* Gaming animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(106, 17, 203, 0.6); }
+            50% { box-shadow: 0 0 20px rgba(106, 17, 203, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(106, 17, 203, 0.6); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .glow-animation {
+            animation: glow 4s ease-in-out infinite;
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .toast {
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: var(--paper-bg);
+            color: var(--paper-text);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 320px;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.warning { border-left: 4px solid var(--warning); }
+        .toast.info { border-left: 4px solid var(--primary); }
+
+        /* small responsive */
+        @media (max-width: 980px) {
+            .hero { grid-template-columns: 1fr }
+            .layout { grid-template-columns: 1fr }
+            .magazine { grid-template-columns: 1fr }
+            .hero-left h1 { font-size: 22px }
+            .profile-header { flex-direction: column; text-align: center; }
+            .profile-stats { justify-content: center; }
+        }
+
+        /* helper */
+        .muted { color: var(--muted) }
+        .hidden { display: none !important }
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- HERO -->
+        <div class="hero" id="hero">
+            <div class="hero-card hero-left float-animation">
+                <div style="display:flex;justify-content:space-between;align-items:start">
+                    <div>
+                        <h1 id="hero-title">MAROONBORNE — লেখো, শেয়ার করো, উজ্জ্বল হও</h1>
+                        <p id="hero-sub">A modern, beautiful space to publish poems, stories, essays, reviews, photography and more. A Content Creation Corner for CADETS to uphold their creativity.</p>
+                        <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+                            <div class="small muted"></div>
+                            <div style="font-weight:800;font-size:20px"></div>
+                        </div>
+                    </div>
+
+                    <div style="text-align:right">
+                        <div style="font-size:13px;color:var(--muted)">Published</div>
+                        <div style="font-weight:800;font-size:22px" id="stat-pub">0</div>
+                    </div>
+                </div>
+
+                <div style="margin-top:18px" class="hero-stats" aria-hidden="true">
+                    <div class="stat glow-animation"><strong id="stat-posts">0</strong><span>Published works</span></div>
+                    <div class="stat glow-animation"><strong id="stat-users">0</strong><span>Active creators</span></div>
+                    <div class="stat glow-animation"><strong id="stat-mag">0</strong><span>Magazine editions</span></div>
+                </div>
+
+                <div style="position:absolute;right:-60px;bottom:-30px;opacity:0.12;pointer-events:none">
+                    <!-- decorative large circle -->
+                    <svg width="320" height="320" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="g" x1="0" x2="1">
+                                <stop offset="0" stop-color="#6a11cb"/>
+                                <stop offset="1" stop-color="#2575fc"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="160" cy="160" r="160" fill="url(#g)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="hero-card login-card glow-effect" id="auth-card">
+                <div class="brand">
+                    <div class="logo">CC</div>
+                    <div>
+                        <h3>Creative Corners</h3>
+                        <p class="small">Publish in Bangla & English · Community-first</p>
+                    </div>
+                </div>
+
+                <!-- AUTH -->
+                <div id="auth-forms">
+                    <!-- login form -->
+                    <div id="login-view">
+                        <input class="input" id="login-email" placeholder="Email" autocomplete="username" />
+                        <input class="input" id="login-pass" placeholder="Password" type="password" autocomplete="current-password" />
+                        <div style="display:flex;gap:10px;margin-top:8px">
+                            <button class="btn" id="btn-login">Sign in</button>
+                            <button class="btn ghost" id="btn-show-signup">Create account</button>
+                        </div>
+                        <div style="margin-top:10px;font-size:13px;color:var(--muted)">
+                            <strong></strong> <strong></strong>
+                        </div>
+                    </div>
+
+                    <!-- signup form -->
+                    <div id="signup-view" style="display:none">
+                        <input class="input" id="su-name" placeholder="Full name" />
+                        <input class="input" id="su-email" placeholder="Email" />
+                        <input class="input" id="su-pass" placeholder="Create password" type="password" />
+                        <input class="input" id="su-bio" placeholder="Short bio (writer, photographer...)" />
+                        <div style="display:flex;gap:10px;margin-top:8px">
+                            <button class="btn" id="btn-signup">Create account</button>
+                            <button class="btn ghost" id="btn-show-login">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LAYOUT: sidebar + content (hidden until auth) -->
+        <div class="layout hidden" id="main-layout" aria-hidden="true">
+            <aside class="sidebar" id="sidebar">
+                <div class="profile">
+                    <div class="avatar" id="side-avatar">CC</div>
+                    <div class="user-info">
+                        <div id="side-name">Welcome</div>
+                        <small id="side-email">Please sign in</small>
+                    </div>
+                </div>
+
+                <div class="nav" id="nav-links">
+                    <a href="#" data-action="dashboard" class="active">🏠 Dashboard <small class="small">Home</small></a>
+                    <a href="#" data-action="create">✍️ লিখো / Create</a>
+                    <a href="#" data-action="magazine">🗞 Magazine</a>
+                    <a href="#" data-action="profile">👤 My Profile</a>
+                    <a href="#" data-action="notices">📢 Notices</a>
+                    <a href="#" data-action="admin" id="nav-admin" style="display:none">🛡️ Admin Panel</a>
+                    <a href="#" data-action="settings" id="nav-settings" style="display:none">⚙️ Settings</a>
+                    <a href="#" data-action="logout" id="lnk-logout" style="display:none;color:var(--paper-text);background:linear-gradient(90deg,var(--accent),var(--primary));">🚪 Log out</a>
+                </div>
+
+                <hr style="border:none;border-top:1px dashed rgba(255,255,255,0.03);margin:12px 0">
+                
+                <!-- Search bar in sidebar -->
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-bar" id="user-search" placeholder="Search users..." />
+                </div>
+                
+                <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Quick Categories</div>
+                <div class="nav" id="quick-cats"></div>
+            </aside>
+
+            <main class="content" id="main-content" tabindex="0">
+                <!-- Search bar in content -->
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-bar" id="content-search" placeholder="Search content..." />
+                </div>
+                
+                <!-- content injected by JS -->
+            </main>
+        </div>
+    </div>
+
+    <!-- VIEWER / MODAL -->
+    <div class="modal" id="viewer-modal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="card" role="document">
+            <button class="close-x" id="close-x" title="Close">✕</button>
+            <header>
+                <div>
+                    <div id="view-title" style="font-weight:800;font-size:18px"></div>
+                    <div class="meta-tag" id="view-meta"></div>
+                </div>
+            </header>
+            <div id="view-body" style="overflow:auto;max-height:70vh;padding-top:4px"></div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        /* ===========================
+           App constants / storage
+           =========================== */
+        const CATEGORIES = [
+            {key:'poem', en:'Poem', bn:'কবিতা'},
+            {key:'essay', en:'Essay', bn:'প্রবন্ধ'},
+            {key:'story', en:'Story', bn:'গল্প'},
+            {key:'article', en:'Article', bn:'প্রবন্ধ'},
+            {key:'drama', en:'Drama', bn:'নাটক'},
+            {key:'news', en:'News Report', bn:'সংবাদ প্রতিবেদন'},
+            {key:'review', en:'Movie & Book Review', bn:'মুভি ও বই পর্যালোচনা'},
+            {key:'photo', en:'Photography', bn:'ফটোগ্রাফি'},
+            {key:'tech', en:'Technology', bn:'প্রযুক্তি'},
+            {key:'painting', en:'Painting', bn:'চিত্রকলা'},
+            {key:'fact', en:'Facts', bn:'তথ্য'},
+            {key:'letter_bn', en:'Letter (Bangla)', bn:'চিঠি (বাংলা)'},
+            {key:'letter_en', en:'Letter (English)', bn:'চিঠি (ইংরেজি)'},
+            {key:'misc', en:'Miscellaneous', bn:'বিবিধ'}
+        ];
+
+        const CONTENT_TYPES = {
+            poem: { fields: [] },
+            essay: { fields: [] },
+            story: { fields: [] },
+            article: { fields: [] },
+            drama: { fields: [{ type: 'input', name: 'characters', label: 'Characters (comma separated)' }] },
+            news: { fields: [{ type: 'input', name: 'location', label: 'Location' }, { type: 'input', name: 'date', label: 'Date of Event' }] },
+            review: { fields: [{ type: 'select', name: 'rating', label: 'Rating', options: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'] }] },
+            photo: { fields: [{ type: 'input', name: 'camera', label: 'Camera Used' }, { type: 'input', name: 'location', label: 'Location' }] },
+            tech: { fields: [] },
+            painting: { fields: [{ type: 'input', name: 'medium', label: 'Medium (oil, watercolor, etc.)' }, { type: 'input', name: 'dimensions', label: 'Dimensions' }] },
+            fact: { fields: [{ type: 'input', name: 'source', label: 'Source' }] },
+            letter_bn: { fields: [{ type: 'input', name: 'recipient', label: 'Recipient' }] },
+            letter_en: { fields: [{ type: 'input', name: 'recipient', label: 'Recipient' }] },
+            misc: { fields: [] }
+        };
+
+        const STORAGE_KEYS = {
+            USERS: 'cc_users_v3',
+            POSTS: 'cc_posts_v3',
+            NOTICE: 'cc_notice_v3',
+            MAGAZINES: 'cc_mags_v3',
+            THEME: 'cc_theme_v2',
+            EDITIONS: 'cc_editions_v1'
+        };
+
+        function uid(){ return 'id-' + Math.random().toString(36).slice(2,9) + '-' + Date.now().toString(36).slice(-4); }
+        function load(key, def){ try{ const j = localStorage.getItem(key); return j?JSON.parse(j):def } catch(e){ return def } }
+        function save(key, v){ localStorage.setItem(key, JSON.stringify(v)) }
+
+        /* ===========================
+           Demo data bootstrap
+           =========================== */
+        let users = load(STORAGE_KEYS.USERS, []);
+        if(!users.find(u=>u.email==='admin@creative.test')){
+            users.push({
+                id: uid(),
+                name: 'Admin',
+                email: 'admin@creative.test',
+                pass: 'admin123',
+                bio: 'Site Administrator',
+                role: 'admin',
+                avatar: '',
+                created: Date.now(),
+                followers: [],
+                following: []
+            });
+            users.push({
+                id: uid(),
+                name: 'Demo User',
+                email: 'user@creative.test',
+                pass: 'user123',
+                bio: 'A creative contributor',
+                role: 'user',
+                avatar: '',
+                created: Date.now(),
+                followers: [],
+                following: []
+            });
+            save(STORAGE_KEYS.USERS, users);
+        }
+
+        let posts = load(STORAGE_KEYS.POSTS, []);
+        let notice = load(STORAGE_KEYS.NOTICE, {text:'Welcome to Creative Corners — join & publish your works!', updated: Date.now()});
+        let magazines = load(STORAGE_KEYS.MAGAZINES, []);
+        let editions = load(STORAGE_KEYS.EDITIONS, []);
+        let theme = load(STORAGE_KEYS.THEME, {
+            bgImage: '',
+            bgColor1: '#071029',
+            bgColor2: '#0b2447',
+            primary: '#6a11cb',
+            accent: '#ffb86b',
+            textColor: '#e6eef8',
+            paperBg: '#fff',
+            paperText: '#061124',
+            siteFont: 'Inter',
+            siteFontStack: `"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`
+        });
+
+        /* ===========================
+           App state
+           =========================== */
+        let state = {
+            currentUser: null,
+            view: 'dashboard',
+            filterCategory: null,
+            currentEdition: null,
+            searchQuery: '',
+            userSearchQuery: ''
+        };
+
+        /* ===========================
+           DOM helpers
+           =========================== */
+        const el = (q)=>document.querySelector(q);
+        const elAll = (q)=>Array.from(document.querySelectorAll(q));
+        function setText(sel, txt){ const e=document.querySelector(sel); if(e) e.textContent = txt; }
+        function html(sel, h){ const e=document.querySelector(sel); if(e) e.innerHTML = h; }
+
+        /* ===========================
+           Theme application
+           =========================== */
+        function applyTheme(t){
+            if(!t) return;
+            // colors
+            document.documentElement.style.setProperty('--bg-grad-1', t.bgColor1 || '#071029');
+            document.documentElement.style.setProperty('--bg-grad-2', t.bgColor2 || '#0b2447');
+            document.documentElement.style.setProperty('--primary', t.primary || '#6a11cb');
+            document.documentElement.style.setProperty('--accent', t.accent || '#ffb86b');
+            document.documentElement.style.setProperty('--text-color', t.textColor || '#e6eef8');
+            document.documentElement.style.setProperty('--paper-bg', t.paperBg || '#fff');
+            document.documentElement.style.setProperty('--paper-text', t.paperText || '#061124');
+            // font
+            document.documentElement.style.setProperty('--site-font', t.siteFontStack || `"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`);
+            // background image
+            if(t.bgImage){
+                document.body.style.backgroundImage = `url(${t.bgImage}), radial-gradient(1200px 600px at 10% 10%, rgba(106,17,203,0.06), transparent), radial-gradient(800px 400px at 90% 90%, rgba(11,61,145,0.04), transparent)`;
+                document.body.style.backgroundSize = `cover, auto, auto`;
+                document.body.style.backgroundRepeat = `no-repeat, no-repeat, no-repeat`;
+                document.body.style.backgroundBlendMode = 'overlay, normal, normal';
+            } else {
+                // reset to gradient using CSS variables
+                document.body.style.backgroundImage = `radial-gradient(1200px 600px at 10% 10%, rgba(106,17,203,0.12), transparent), radial-gradient(800px 400px at 90% 90%, rgba(11,61,145,0.08), transparent), linear-gradient(180deg, ${t.bgColor1 || '#071029'} 0%, ${t.bgColor2 || '#0b2447'} 100%)`;
+                document.body.style.backgroundSize = '';
+                document.body.style.backgroundRepeat = '';
+                document.body.style.backgroundBlendMode = '';
+            }
+            // update nav colors if needed
+            elAll('.btn').forEach(b=>{
+                // nothing else
+            });
+            // persist theme
+            save(STORAGE_KEYS.THEME, t);
+        }
+
+        /* ===========================
+           Stats & quick cats
+           =========================== */
+        function refreshStats(){
+            setText('#stat-posts', posts.length);
+            setText('#stat-users', users.length);
+            setText('#stat-mag', magazines.length);
+            setText('#stat-pub', posts.filter(p=>!p.draft).length);
+        }
+
+        function renderQuickCats(){
+            const container = el('#quick-cats');
+            container.innerHTML = '';
+            CATEGORIES.forEach(c=>{
+                const a = document.createElement('a');
+                a.href='#';
+                a.className = 'small muted';
+                a.innerHTML = `${c.bn} <small style="color:var(--muted);display:block">${c.en}</small>`;
+                a.onclick = (ev)=>{
+                    ev.preventDefault();
+                    state.filterCategory = c.key;
+                    state.view = 'dashboard';
+                    render();
+                };
+                container.appendChild(a);
+            });
+        }
+
+        /* ===========================
+           AUTH
+           =========================== */
+        function showLoginView(){ el('#signup-view').style.display='none'; el('#login-view').style.display='block'; }
+        function showSignupView(){ el('#signup-view').style.display='block'; el('#login-view').style.display='none'; }
+        el('#btn-show-signup').addEventListener('click', showSignupView);
+        el('#btn-show-login').addEventListener('click', showLoginView);
+
+        el('#btn-login').addEventListener('click', ()=>{
+            const email = el('#login-email').value.trim();
+            const pass = el('#login-pass').value;
+            const user = users.find(u=>u.email.toLowerCase()===email.toLowerCase() && u.pass===pass);
+            if(user){
+                login(user);
+            } else {
+                showToast('Invalid credentials. Try demo admin or sign up.', 'error');
+            }
+        });
+        
+        el('#btn-signup').addEventListener('click', ()=>{
+            const name = el('#su-name').value.trim();
+            const email = el('#su-email').value.trim();
+            const pass = el('#su-pass').value;
+            const bio = el('#su-bio').value;
+            if(!name || !email || !pass){ showToast('Please provide name, email and password', 'error'); return; }
+            if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){ showToast('Email already exists. Please login.', 'error'); return; }
+            const newUser = { 
+                id: uid(), 
+                name, 
+                email, 
+                pass, 
+                bio, 
+                role:'user', 
+                avatar: '', 
+                created: Date.now(),
+                followers: [],
+                following: []
+            };
+            users.push(newUser);
+            save(STORAGE_KEYS.USERS, users);
+            login(newUser);
+            showToast('Account created successfully!', 'success');
+        });
+
+        function login(user){
+            state.currentUser = user;
+            // update UI small
+            el('#side-name').textContent = user.name || 'Creator';
+            el('#side-email').textContent = user.email;
+            el('#side-avatar').textContent = (user.name||'U').slice(0,2).toUpperCase();
+            el('#lnk-logout').style.display = 'block';
+            // hide auth card & reveal main layout
+            el('#auth-card').style.display = 'none';
+            el('#main-layout').classList.remove('hidden');
+            el('#main-layout').removeAttribute('aria-hidden');
+            // show admin panel if admin
+            if(user.role === 'admin'){
+                el('#nav-admin').style.display = 'block';
+                el('#nav-settings').style.display = 'block';
+            } else {
+                el('#nav-admin').style.display = 'none';
+                el('#nav-settings').style.display = 'none';
+            }
+            // render app
+            render();
+            createParticles();
+        }
+
+        el('#lnk-logout').addEventListener('click', (ev)=>{
+            ev.preventDefault();
+            state.currentUser = null;
+            el('#side-name').textContent = 'Welcome';
+            el('#side-email').textContent = 'Please sign in';
+            el('#side-avatar').textContent = 'CC';
+            el('#lnk-logout').style.display = 'none';
+            el('#auth-card').style.display = 'block';
+            el('#main-layout').classList.add('hidden');
+            el('#main-layout').setAttribute('aria-hidden','true');
+            showLoginView();
+            state.view = 'dashboard';
+            render();
+        });
+
+        /* ===========================
+           Navigation wiring
+           =========================== */
+        function setActiveNav(action){
+            elAll('#nav-links a').forEach(a=>{
+                if(a.dataset.action === action) a.classList.add('active'); else a.classList.remove('active');
+            });
+        }
+        
+        elAll('#nav-links a').forEach(a=>{
+            a.addEventListener('click', (ev)=>{
+                ev.preventDefault();
+                const action = a.dataset.action;
+                if(action==='logout'){ return; }
+                if(action){
+                    state.view = action;
+                    state.filterCategory = null;
+                    render();
+                }
+            });
+        });
+
+        /* ===========================
+           Render main content
+           =========================== */
+        function render(){
+            refreshStats();
+            renderQuickCats();
+            setActiveNav(state.view);
+            const main = el('#main-content');
+            if(state.view==='dashboard') return renderDashboard(main);
+            if(state.view==='create') return renderCreate(main);
+            if(state.view==='magazine') return renderMagazine(main);
+            if(state.view==='profile') return renderProfile(main);
+            if(state.view==='notices') return renderNotices(main);
+            if(state.view==='settings') return renderSettings(main);
+            if(state.view==='admin') return renderAdminPanel(main);
+            renderDashboard(main);
+        }
+
+        /* ---------------------------
+           DASHBOARD
+           --------------------------- */
+        function renderDashboard(container){
+            let htmlStr = '';
+            htmlStr += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <div><h2 style="margin:0">Dashboard</h2><div class="small" style="margin-top:4px;color:var(--muted)">Browse works or create your own</div></div>
+                <div>
+                    <button class="btn" onclick="openCreateQuick()">+ Create</button>
+                    <button class="btn ghost" onclick="state.view='magazine';render()">View Magazine</button>
+                </div>
+            </div>`;
+
+            // categories
+            htmlStr += '<div class="categories">';
+            CATEGORIES.forEach(c=>{
+                htmlStr += `<div class="cat" onclick="filterCat('${c.key}')">
+                    <h4>${c.bn}</h4><p class="small">${c.en}</p>
+                </div>`;
+            });
+            htmlStr += '</div>';
+
+            // Filter posts based on search query
+            let filtered = state.filterCategory ? posts.filter(p=>p.category===state.filterCategory) : posts.slice().reverse();
+            
+            if (state.searchQuery) {
+                const query = state.searchQuery.toLowerCase();
+                filtered = filtered.filter(p => 
+                    p.title.toLowerCase().includes(query) || 
+                    p.content.toLowerCase().includes(query) ||
+                    getUserName(p.authorId).toLowerCase().includes(query)
+                );
+            }
+
+            htmlStr += `<div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Recent works</h3><div class="small">${filtered.length} items</div></div>`;
+            htmlStr += '<div class="posts">';
+            
+            if (filtered.length === 0) {
+                htmlStr += `<div class="text-center mt-2 muted">No content found matching your search.</div>`;
+            } else {
+                filtered.forEach(p=>{
+                    htmlStr += `<div class="post" id="post-${p.id}">
+                        ${p.image?'<img src="'+p.image+'" alt="cover">':''}
+                        <div class="meta"><div>${formatDate(p.created)}</div><div>${getCategoryName(p.category)}</div></div>
+                        <div class="title">${escapeHtml(p.title)}</div>
+                        <div class="excerpt">${strip(p.content,120)}</div>
+                        <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+                            <div style="font-size:13px;color:var(--muted)">${getUserName(p.authorId)}</div>
+                            <div>
+                                <button class="btn ghost" onclick='viewPost("${p.id}")'>View</button>
+                                ${canEdit(p)?`<button class="btn" onclick='editPost("${p.id}")'>Edit</button> <button class="btn ghost" style="color:var(--paper-text)" onclick='deletePost("${p.id}")'>Delete</button>`:''}
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            }
+            
+            htmlStr += '</div>';
+
+            container.innerHTML = htmlStr;
+        }
+
+        /* ---------------------------
+           CREATE / EDIT
+           --------------------------- */
+        function renderCreate(container, editingPost=null){
+            if(!state.currentUser){ container.innerHTML = `<div style="padding:30px;text-align:center"><strong>Please sign in to create or upload your works.</strong></div>`; return; }
+            
+            let post = editingPost || { 
+                id: '', 
+                title:'', 
+                category: 'story', 
+                content:'', 
+                image:'', 
+                authorId: state.currentUser.id,
+                meta: {}
+            };
+            
+            const isEdit = !!post.id;
+            
+            // Content type selector
+            let contentTypeSelector = `
+                <div class="content-type-selector">
+                    ${Object.entries(CONTENT_TYPES).map(([key, config]) => `
+                        <button class="content-type-btn ${post.category === key ? 'active' : ''}" 
+                                onclick="changeContentType('${key}')">
+                            ${getCategoryName(key)}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Content-specific fields
+            let contentSpecificFields = '';
+            const contentTypeConfig = CONTENT_TYPES[post.category] || {};
+            
+            if (contentTypeConfig.fields && contentTypeConfig.fields.length > 0) {
+                contentSpecificFields = `
+                    <div class="content-specific-fields">
+                        <h4>${getCategoryName(post.category)} Details</h4>
+                        ${contentTypeConfig.fields.map(field => {
+                            if (field.type === 'input') {
+                                return `
+                                    <div style="margin-bottom: 12px;">
+                                        <label style="display: block; margin-bottom: 4px; font-size: 14px;">${field.label}</label>
+                                        <input type="text" class="input" 
+                                            id="meta-${field.name}" 
+                                            value="${escapeAttr(post.meta[field.name] || '')}" 
+                                            placeholder="${field.label}" />
+                                    </div>
+                                `;
+                            } else if (field.type === 'select') {
+                                return `
+                                    <div style="margin-bottom: 12px;">
+                                        <label style="display: block; margin-bottom: 4px; font-size: 14px;">${field.label}</label>
+                                        <select class="input" id="meta-${field.name}">
+                                            ${field.options.map(opt => `
+                                                <option value="${opt}" ${post.meta[field.name] === opt ? 'selected' : ''}>${opt}</option>
+                                            `).join('')}
+                                        </select>
+                                    </div>
+                                `;
+                            }
+                            return '';
+                        }).join('')}
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div><h2 style="margin:0">${isEdit? 'Edit work' : 'New work'}</h2><div class="small" style="color:var(--muted)">Publish poetry, essays, stories and photography</div></div>
+                    <div>
+                        <button class="btn ghost" onclick="state.view='dashboard';render()">Cancel</button>
+                        <button class="btn" id="save-post-btn">${isEdit?'Save changes':'Publish'}</button>
+                    </div>
+                </div>
+
+                ${contentTypeSelector}
+                
+                <div style="display:grid;grid-template-columns:1fr 320px;gap:12px">
+                    <div>
+                        <input class="input" id="post-title" placeholder="Title (Bangla/English).." value="${escapeAttr(post.title)}" />
+                        <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+                            <select class="input" id="post-cat" style="width:220px" onchange="changeContentType(this.value)">
+                                ${CATEGORIES.map(c=>`<option value="${c.key}" ${c.key===post.category?'selected':''}>${c.bn} — ${c.en}</option>`).join('')}
+                            </select>
+                            <input class="input" type="file" id="post-image" style="padding:8px" accept="image/*" />
+                        </div>
+
+                        ${contentSpecificFields}
+
+                        <div style="margin-top:10px" class="editor-toolbar">
+                            <button onclick="execCmd('bold')" title="Bold"><b>B</b></button>
+                            <button onclick="execCmd('italic')" title="Italic"><i>I</i></button>
+                            <button onclick="execCmd('insertUnorderedList')" title="Bullet">• List</button>
+                            <button onclick="execCmd('createLink')" title="Link">Link</button>
+                            <button onclick="execCmd('formatBlock','<h3>')" title="H3">H3</button>
+                            <button onclick="execCmd('removeFormat')" title="Remove format">clear</button>
+                        </div>
+
+                        <div id="editor" class="editor" contenteditable="true">${post.content || '<p>Start writing your masterpiece...</p>'}</div>
+                    </div>
+
+                    <aside>
+                        <div style="background:linear-gradient(90deg,#fff2,#fff0);padding:12px;border-radius:10px;color:var(--muted);margin-bottom:12px">
+                            <div style="font-weight:700">${state.currentUser.name}</div>
+                            <div style="font-size:13px">${state.currentUser.bio || ''}</div>
+                            <div style="margin-top:8px;font-size:12px;color:var(--muted)">Author ID: <strong>${state.currentUser.id}</strong></div>
+                        </div>
+
+                        <div style="display:flex;gap:8px">
+                            <button class="btn" id="btn-publish">${isEdit?'Save':'Publish'}</button>
+                            <button class="btn ghost" id="btn-draft">Save draft</button>
+                        </div>
+                        <div style="margin-top:12px;color:var(--muted);font-size:13px">Preview Cover</div>
+                        <div id="cover-preview" style="margin-top:8px;border-radius:8px;min-height:160px;background:${post.image?`url(${post.image}) center/cover`:'#0b2447'};background-size:cover"></div>
+                    </aside>
+                </div>
+            `;
+
+            // attach events
+            const editor = el('#editor');
+            function attachImageInput(){
+                el('#post-image').addEventListener('change', async (ev)=>{
+                    const f = ev.target.files[0];
+                    if(!f) return;
+                    const data = await fileToBase64(f);
+                    el('#cover-preview').style.background = `url(${data}) center/cover`;
+                    el('#cover-preview').style.backgroundSize = 'cover';
+                    editor.dataset.image = data;
+                });
+            }
+            attachImageInput();
+
+            el('#save-post-btn').addEventListener('click', ()=>saveFromEditor(post.id));
+            el('#btn-publish').addEventListener('click', ()=>saveFromEditor(post.id,true));
+            el('#btn-draft').addEventListener('click', ()=>saveFromEditor(post.id,false,true));
+        }
+
+        function changeContentType(type) {
+            const postCat = el('#post-cat');
+            if (postCat) postCat.value = type;
+            
+            // Re-render the form with new content type
+            const editorContent = el('#editor') ? el('#editor').innerHTML : '';
+            const title = el('#post-title') ? el('#post-title').value : '';
+            
+            // Store current content in a temporary object
+            const tempPost = {
+                id: '',
+                title: title,
+                category: type,
+                content: editorContent,
+                image: el('#cover-preview') ? getBackgroundUrl(el('#cover-preview')) : '',
+                authorId: state.currentUser.id,
+                meta: {}
+            };
+            
+            // Re-render the create form
+            renderCreate(el('#main-content'), tempPost);
+        }
+
+        /* WYSIWYG exec */
+        function execCmd(cmd, val){
+            if(cmd==='createLink'){
+                const url = prompt('Enter URL (https://...)');
+                if(url) document.execCommand('createLink', false, url);
+            } else {
+                document.execCommand(cmd, false, val || null);
+            }
+        }
+
+        /* Save post */
+        function saveFromEditor(existingId='', publish=true, draft=false){
+            const title = el('#post-title').value.trim();
+            const category = el('#post-cat').value;
+            const content = el('#editor').innerHTML;
+            const image = el('#editor').dataset.image || (el('#cover-preview')?getBackgroundUrl(el('#cover-preview')):'') || '';
+            
+            // Get content-specific metadata
+            const meta = {};
+            const contentTypeConfig = CONTENT_TYPES[category] || {};
+            
+            if (contentTypeConfig.fields) {
+                contentTypeConfig.fields.forEach(field => {
+                    const fieldEl = el(`#meta-${field.name}`);
+                    if (fieldEl) {
+                        meta[field.name] = fieldEl.value;
+                    }
+                });
+            }
+            
+            if(!title){ showToast('Please provide a title', 'error'); return; }
+            
+            if(existingId){
+                const idx = posts.findIndex(p=>p.id===existingId);
+                if(idx>=0){
+                    posts[idx].title = title; 
+                    posts[idx].category = category; 
+                    posts[idx].content = content; 
+                    posts[idx].image = image || posts[idx].image;
+                    posts[idx].meta = meta;
+                    posts[idx].updated = Date.now();
+                    if(draft) posts[idx].draft = true; else posts[idx].draft = !publish;
+                }
+            } else {
+                const newPost = {
+                    id: uid(),
+                    title, 
+                    category, 
+                    content, 
+                    image,
+                    meta,
+                    authorId: state.currentUser.id,
+                    created: Date.now(),
+                    updated: Date.now(),
+                    draft: (!publish)
+                };
+                posts.push(newPost);
+            }
+            
+            save(STORAGE_KEYS.POSTS, posts);
+            state.view = 'dashboard';
+            state.filterCategory = category;
+            render();
+            showToast(publish ? 'Content published successfully!' : 'Saved as draft', 'success');
+        }
+
+        /* background-image helper */
+        function getBackgroundUrl(elm){
+            const bg = elm.style.background || '';
+            const m = bg.match(/url\((['"]?)(.*?)\1\)/);
+            return m?m[2]:'';
+        }
+
+        /* ===========================
+           MAGAZINE
+           =========================== */
+        function renderMagazine(container){
+            container.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div><h2 style="margin:0">Magazine — জনমত</h2><div class="small" style="color:var(--muted)">A newspaper-style combined edition</div></div>
+                    <div>
+                        ${state.currentUser && state.currentUser.role==='admin' ? `
+                            <button class="btn" onclick="createNewEdition()">New Edition</button>
+                            <button class="btn ghost" onclick="closeCurrentEdition()">Close Edition</button>
+                        ` : ''}
+                        <button class="btn ghost" onclick="state.view='dashboard';render()">Back</button>
+                    </div>
+                </div>
+                
+                ${state.currentUser && state.currentUser.role==='admin' ? `
+                    <div class="admin-panel">
+                        <h3>Edition Management</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div>
+                                <h4>Current Edition</h4>
+                                ${state.currentEdition ? `
+                                    <div class="edition-item">
+                                        <div class="edition-info">
+                                            <h4>Edition #${state.currentEdition.number}</h4>
+                                            <p>Created: ${formatDate(state.currentEdition.created)}</p>
+                                            <p>Status: <strong>${state.currentEdition.status}</strong></p>
+                                        </div>
+                                        <div>
+                                            <button class="btn" onclick="publishEdition()">Publish</button>
+                                        </div>
+                                    </div>
+                                ` : '<p>No active edition. Create a new one to start.</p>'}
+                            </div>
+                            <div>
+                                <h4>Past Editions</h4>
+                                <div class="edition-list">
+                                    ${editions.filter(e => e.status === 'published').map(edition => `
+                                        <div class="edition-item">
+                                            <div class="edition-info">
+                                                <h4>Edition #${edition.number}</h4>
+                                                <p>Published: ${formatDate(edition.published || edition.created)}</p>
+                                            </div>
+                                            <div>
+                                                <button class="btn ghost" onclick="viewEdition('${edition.id}')">View</button>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+                
+                <div class="magazine">
+                    <div class="newspaper" id="mag-viewport" role="region" aria-live="polite"></div>
+                    <div class="right-col">
+                        <div class="notice"><strong>Homepage Notice</strong><div class="small" id="notice-text">${escapeHtml(notice.text)}</div></div>
+                        <div style="font-weight:700;margin-bottom:8px">Latest uploads</div>
+                        <div id="mag-right-list" style="display:grid;gap:8px"></div>
+                    </div>
+                </div>
+            `;
+            
+            const main = el('#mag-viewport');
+            const recent = posts.slice().reverse().slice(0,8);
+            let html = `<div class="mag-cover"><div class="hero-img" style="background-image:url('${recent[0]?recent[0].image:''}');"></div><div class="meta"><h2 style="margin:0">Creative Corners — Edition ${magazines.length+1}</h2><p class="small muted">Compiled ${new Date().toLocaleString()}</p><p class="small muted">A curated edition featuring the best recent uploads.</p></div></div><hr>`;
+            recent.forEach(p=>{
+                html += `<div class="paper-article">
+                    <h3>${escapeHtml(p.title)}</h3>
+                    <div style="color:#234;font-size:13px">${strip(p.content,260)}</div>
+                    <div style="margin-top:8px;font-size:12px;color:#446">${getUserName(p.authorId)} · ${formatDate(p.created)}</div>
+                </div>`;
+            });
+            main.innerHTML = html;
+
+            const right = el('#mag-right-list');
+            right.innerHTML = recent.map(r=>`<div style="padding:10px;border-radius:8px;background:linear-gradient(90deg,#fff2,#fff0);color:#021124"><div style="font-weight:700">${escapeHtml(r.title)}</div><div style="font-size:12px;color:#123">${getUserName(r.authorId)}</div></div>`).join('');
+        }
+
+        function createNewEdition() {
+            if(!state.currentUser || state.currentUser.role!=='admin'){ 
+                showToast('Only admin can create magazine editions.', 'error'); 
+                return; 
+            }
+            
+            if (state.currentEdition) {
+                showToast('Please close the current edition first.', 'warning');
+                return;
+            }
+            
+            const newEdition = { 
+                id: uid(), 
+                number: editions.length + 1,
+                created: Date.now(),
+                status: 'draft',
+                posts: []
+            };
+            
+            state.currentEdition = newEdition;
+            editions.push(newEdition);
+            save(STORAGE_KEYS.EDITIONS, editions);
+            showToast('New edition created. You can now add content to it.', 'success');
+            render();
+        }
+
+        function closeCurrentEdition() {
+            if (!state.currentEdition) {
+                showToast('No active edition to close.', 'warning');
+                return;
+            }
+            
+            state.currentEdition = null;
+            showToast('Edition closed. You can create a new one now.', 'success');
+            render();
+        }
+
+        function publishEdition() {
+            if (!state.currentEdition) {
+                showToast('No active edition to publish.', 'warning');
+                return;
+            }
+            
+            state.currentEdition.status = 'published';
+            state.currentEdition.published = Date.now();
+            save(STORAGE_KEYS.EDITIONS, editions);
+            showToast('Edition published successfully!', 'success');
+            render();
+        }
+
+        function viewEdition(editionId) {
+            const edition = editions.find(e => e.id === editionId);
+            if (!edition) {
+                showToast('Edition not found.', 'error');
+                return;
+            }
+            
+            // Show edition content in a modal
+            const modal = el('#viewer-modal');
+            el('#view-title').textContent = `Magazine Edition #${edition.number}`;
+            el('#view-meta').textContent = `Published: ${formatDate(edition.published || edition.created)}`;
+            
+            let editionContent = '<div style="padding: 20px; background: #f9f9f9; border-radius: 8px;">';
+            editionContent += '<h2 style="color: #333;">Table of Contents</h2>';
+            editionContent += '<ul style="color: #555;">';
+            
+            edition.posts.forEach(postId => {
+                const post = posts.find(p => p.id === postId);
+                if (post) {
+                    editionContent += `<li><strong>${escapeHtml(post.title)}</strong> by ${getUserName(post.authorId)}</li>`;
+                }
+            });
+            
+            editionContent += '</ul></div>';
+            el('#view-body').innerHTML = editionContent;
+            
+            modal.classList.add('open');
+            modal.removeAttribute('aria-hidden');
+        }
+
+        /* ===========================
+           PROFILE
+           =========================== */
+        function renderProfile(container){
+            if(!state.currentUser){ 
+                container.innerHTML = `<div style="padding:30px;text-align:center"><strong>Please sign in to view your profile.</strong></div>`; 
+                return; 
+            }
+            
+            const myPosts = posts.filter(p=>p.authorId===state.currentUser.id).slice().reverse();
+            const followers = users.filter(u => u.followers && u.followers.includes(state.currentUser.id));
+            const following = users.filter(u => state.currentUser.following && state.currentUser.following.includes(u.id));
+            
+            let html = `
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        ${state.currentUser.avatar ? 
+                            `<img src="${state.currentUser.avatar}" alt="${state.currentUser.name}">` : 
+                            `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(45deg,var(--primary),var(--accent));color:white;font-size:24px;font-weight:bold;">${(state.currentUser.name || 'U').slice(0,2).toUpperCase()}</div>`
+                        }
+                        <div style="position:absolute;bottom:5px;right:5px;">
+                            <button class="btn" style="padding:4px 8px;font-size:12px;" onclick="changeAvatar()">Change</button>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <h2 style="margin:0">${state.currentUser.name}</h2>
+                        <p class="muted">${state.currentUser.bio || 'No bio yet'}</p>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <div class="count">${myPosts.length}</div>
+                                <div class="label">Posts</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="count">${followers.length}</div>
+                                <div class="label">Followers</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="count">${following.length}</div>
+                                <div class="label">Following</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            html += `<h3 style="margin-top:8px">My uploads (${myPosts.length})</h3>`;
+            html += `<div class="posts">${myPosts.map(p=>`<div class="post">
+                ${p.image?'<img src="'+p.image+'">':''}
+                <div class="meta"><div>${formatDate(p.created)}</div><div>${getCategoryName(p.category)}</div></div>
+                <div class="title">${escapeHtml(p.title)}</div>
+                <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+                    <div style="font-size:13px;color:var(--muted)">${getUserName(p.authorId)}</div>
+                    <div>
+                        <button class="btn ghost" onclick='viewPost("${p.id}")'>View</button>
+                        <button class="btn" onclick='editPost("${p.id}")'>Edit</button>
+                        <button class="btn ghost" style="color:var(--paper-text)" onclick='deletePost("${p.id}")'>Delete</button>
+                    </div>
+                </div>
+            </div>`).join('')}</div>`;
+            
+            container.innerHTML = html;
+        }
+
+        function changeAvatar() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const base64 = await fileToBase64(file);
+                    state.currentUser.avatar = base64;
+                    
+                    // Update in users array
+                    const userIndex = users.findIndex(u => u.id === state.currentUser.id);
+                    if (userIndex !== -1) {
+                        users[userIndex].avatar = base64;
+                        save(STORAGE_KEYS.USERS, users);
+                        showToast('Avatar updated successfully!', 'success');
+                        render();
+                    }
+                }
+            };
+            input.click();
+        }
+
+        /* ===========================
+           ADMIN PANEL
+           =========================== */
+        function renderAdminPanel(container) {
+            if (!state.currentUser || state.currentUser.role !== 'admin') {
+                container.innerHTML = `<div style="padding:30px;text-align:center"><strong>Only admin can access this panel.</strong></div>`;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div><h2 style="margin:0">Admin Panel</h2><div class="small" style="color:var(--muted)">Manage users and content</div></div>
+                    <div><button class="btn ghost" onclick="state.view='dashboard';render()">Back</button></div>
+                </div>
+                
+                <div class="admin-panel">
+                    <div class="admin-section">
+                        <h3>User Management</h3>
+                        <div class="user-list">
+                            ${users.map(user => `
+                                <div class="user-item">
+                                    <div class="user-info">
+                                        <div class="avatar" style="width:40px;height:40px;">
+                                            ${user.avatar ? 
+                                                `<img src="${user.avatar}" alt="${user.name}">` : 
+                                                user.name.slice(0,2).toUpperCase()
+                                            }
+                                        </div>
+                                        <div>
+                                            <div>${user.name} ${user.role === 'admin' ? '<span style="color:var(--accent)">(Admin)</span>' : ''}</div>
+                                            <div class="small">${user.email}</div>
+                                        </div>
+                                    </div>
+                                    <div class="user-actions">
+                                        ${user.id !== state.currentUser.id ? `
+                                            <button class="btn danger" onclick="deleteUser('${user.id}')">Delete</button>
+                                            <button class="btn warning" onclick="toggleAdmin('${user.id}')">
+                                                ${user.role === 'admin' ? 'Revoke Admin' : 'Make Admin'}
+                                            </button>
+                                        ` : '<span class="small muted">Current user</span>'}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h3>Content Management</h3>
+                        <div class="user-list">
+                            ${posts.map(post => `
+                                <div class="user-item">
+                                    <div class="user-info">
+                                        <div>
+                                            <div>${escapeHtml(post.title)}</div>
+                                            <div class="small">By ${getUserName(post.authorId)} • ${formatDate(post.created)}</div>
+                                        </div>
+                                    </div>
+                                    <div class="user-actions">
+                                        <button class="btn ghost" onclick="viewPost('${post.id}')">View</button>
+                                        <button class="btn danger" onclick="deletePost('${post.id}')">Delete</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function deleteUser(userId) {
+            if (!state.currentUser || state.currentUser.role !== 'admin') {
+                showToast('Only admin can delete users.', 'error');
+                return;
+            }
+            
+            if (userId === state.currentUser.id) {
+                showToast('You cannot delete your own account.', 'error');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                users = users.filter(u => u.id !== userId);
+                // Also remove user's posts
+                posts = posts.filter(p => p.authorId !== userId);
+                save(STORAGE_KEYS.USERS, users);
+                save(STORAGE_KEYS.POSTS, posts);
+                showToast('User deleted successfully.', 'success');
+                render();
+            }
+        }
+
+        function toggleAdmin(userId) {
+            if (!state.currentUser || state.currentUser.role !== 'admin') {
+                showToast('Only admin can change user roles.', 'error');
+                return;
+            }
+            
+            if (userId === state.currentUser.id) {
+                showToast('You cannot change your own role.', 'error');
+                return;
+            }
+            
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                user.role = user.role === 'admin' ? 'user' : 'admin';
+                save(STORAGE_KEYS.USERS, users);
+                showToast(`User role updated to ${user.role}.`, 'success');
+                render();
+            }
+        }
+
+        /* ===========================
+           NOTICES
+           =========================== */
+        function renderNotices(container){
+            let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <div><h2 style="margin:0">Notices</h2><div class="small">Important announcements</div></div>
+                <div><button class="btn ghost" onclick="state.view='dashboard';render()">Back</button></div>
+            </div>`;
+            html += `<div style="display:grid;grid-template-columns:1fr 320px;gap:12px">
+                <div>
+                    <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff0);color:var(--paper-text)">
+                        <h3>Current Notice</h3>
+                        <div class="small" style="color:#234" id="notice-show">${escapeHtml(notice.text)}</div>
+                    </div>
+                </div>
+                <div>
+                    ${state.currentUser && state.currentUser.role==='admin' ? `<div style="padding:12px;background:linear-gradient(90deg,#fff2,#fff0);border-radius:10px">
+                        <div><strong>Edit Notice</strong></div>
+                        <textarea id="notice-input" style="width:100%;height:140px;margin-top:8px;padding:8px;border-radius:8px">${escapeAttr(notice.text)}</textarea>
+                        <div style="margin-top:8px"><button class="btn" onclick="saveNotice()">Save Notice</button></div>
+                    </div>` : `<div style="padding:12px;background:linear-gradient(90deg,#fff2,#fff0);border-radius:10px;color:#234">Only admin can edit the homepage notice.</div>`}
+                </div>
+            </div>`;
+            container.innerHTML = html;
+        }
+        
+        function saveNotice(){
+            const t = el('#notice-input').value;
+            if(!t) return showToast('Empty notice not allowed', 'error');
+            notice.text = t; notice.updated = Date.now();
+            save(STORAGE_KEYS.NOTICE, notice);
+            showToast('Notice updated.', 'success');
+            render();
+        }
+
+        /* ===========================
+           VIEWER modal
+           =========================== */
+        function viewPost(id){
+            const p = posts.find(x=>x.id===id);
+            if(!p) return showToast('Post not found', 'error');
+            const modal = el('#viewer-modal');
+            el('#view-title').textContent = p.title;
+            el('#view-meta').textContent = `${getUserName(p.authorId)} · ${formatDate(p.created)} · ${getCategoryName(p.category)}`;
+            el('#view-body').innerHTML = (p.image?`<img src="${p.image}" style="width:100%;height:260px;object-fit:cover;border-radius:8px;margin-bottom:12px">`:'') + p.content;
+            modal.classList.add('open');
+            modal.removeAttribute('aria-hidden');
+            // prevent body scroll while modal open (but keep modal content scrollable)
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeViewer(){
+            el('#viewer-modal').classList.remove('open');
+            el('#viewer-modal').setAttribute('aria-hidden','true');
+            document.body.style.overflow = ''; // restore
+        }
+        
+        el('#close-x').addEventListener('click', closeViewer);
+        el('#viewer-modal').addEventListener('click', (ev)=>{
+            // close when clicking overlay (but not if clicking inside card area)
+            if(ev.target === el('#viewer-modal')) closeViewer();
+        });
+
+        /* ===========================
+           Edit / Delete helpers
+           =========================== */
+        function editPost(id){
+            const p = posts.find(x=>x.id===id);
+            if(!p) return showToast('Post not found', 'error');
+            if(!canEdit(p)) return showToast('You do not have permission to edit this item.', 'error');
+            state.view = 'create';
+            renderCreate(el('#main-content'), p);
+        }
+        
+        function deletePost(id){
+            const p = posts.find(x=>x.id===id);
+            if(!p) return;
+            if(!canEdit(p)) return showToast('You cannot delete this work.', 'error');
+            if(!confirm('Delete this work permanently?')) return;
+            posts = posts.filter(x=>x.id!==id);
+            save(STORAGE_KEYS.POSTS, posts);
+            showToast('Post deleted successfully.', 'success');
+            render();
+        }
+        
+        function canEdit(post){
+            if(!state.currentUser) return false;
+            if(state.currentUser.role==='admin') return true;
+            return post.authorId === state.currentUser.id;
+        }
+
+        /* ===========================
+           Utilities
+           =========================== */
+        function getUserName(id){
+            const u = users.find(x=>x.id===id);
+            return u?u.name:'Unknown';
+        }
+        
+        function formatDate(ts){ 
+            const d=new Date(ts); 
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString(); 
+        }
+        
+        function strip(html, len=140){
+            const t = html.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
+            return t.length>len ? t.slice(0,len)+'...' : t;
+        }
+        
+        function escapeHtml(s){ if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+        function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
+        
+        function fileToBase64(file){
+            return new Promise((res, rej)=>{
+                const reader = new FileReader();
+                reader.onload = ()=>res(reader.result);
+                reader.onerror = ()=>rej();
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        function filterCat(key){
+            state.filterCategory = key;
+            state.view = 'dashboard';
+            render();
+        }
+        
+        function showToast(message, type = 'info') {
+            const toastContainer = el('#toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let icon = 'ℹ️';
+            if (type === 'success') icon = '✅';
+            if (type === 'error') icon = '❌';
+            if (type === 'warning') icon = '⚠️';
+            
+            toast.innerHTML = `
+                <span>${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        function createParticles() {
+            // Remove existing particles
+            document.querySelectorAll('.particle').forEach(p => p.remove());
+            
+            // Create new particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                particle.style.animation = `float ${Math.random() * 10 + 5}s ease-in-out infinite`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                document.body.appendChild(particle);
+            }
+        }
+
+        /* ===========================
+           Search functionality
+           =========================== */
+        el('#content-search').addEventListener('input', (e) => {
+            state.searchQuery = e.target.value;
+            if (state.view === 'dashboard') {
+                render();
+            }
+        });
+        
+        el('#user-search').addEventListener('input', (e) => {
+            state.userSearchQuery = e.target.value;
+            // Implement user search functionality if needed
+        });
+
+        /* ===========================
+           Category helpers
+           =========================== */
+        function getCategoryName(key){
+            const c = CATEGORIES.find(x=>x.key===key);
+            return c?c.bn: key;
+        }
+
+        /* ===========================
+           SETTINGS (admin)
+           =========================== */
+        function renderSettings(container){
+            if(!state.currentUser || state.currentUser.role!=='admin'){
+                container.innerHTML = `<div style="padding:30px;text-align:center"><strong>Only admin can access settings.</strong></div>`; return;
+            }
+            container.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div><h2 style="margin:0">Site Settings</h2><div class="small" style="color:var(--muted)">Change look & feel</div></div>
+                    <div><button class="btn ghost" onclick="state.view='dashboard';render()">Back</button></div>
+                </div>
+
+                <div class="settings-panel">
+                    <div style="font-weight:700;margin-bottom:8px">Theme</div>
+
+                    <div class="settings-row">
+                        <label style="min-width:120px">Background image</label>
+                        <input type="file" id="theme-bg-file" accept="image/*" class="input" />
+                        <button class="btn ghost" id="remove-bg">Remove</button>
+                    </div>
+
+                    <div class="settings-row">
+                        <label style="min-width:120px">Background color 1</label>
+                        <input type="color" id="bg1" class="color-input" value="${theme.bgColor1 || '#071029'}" />
+                    </div>
+                    <div class="settings-row">
+                        <label style="min-width:120px">Background color 2</label>
+                        <input type="color" id="bg2" class="color-input" value="${theme.bgColor2 || '#0b2447'}" />
+                    </div>
+
+                    <div class="settings-row">
+                        <label style="min-width:120px">Primary (accent)</label>
+                        <input type="color" id="primary-color" class="color-input" value="${theme.primary || '#6a11cb'}" />
+                    </div>
+                    <div class="settings-row">
+                        <label style="min-width:120px">Accent</label>
+                        <input type="color" id="accent-color" class="color-input" value="${theme.accent || '#ffb86b'}" />
+                    </div>
+
+                    <div class="settings-row">
+                        <label style="min-width:120px">Site text</label>
+                        <input type="color" id="text-color" class="color-input" value="${theme.textColor || '#e6eef8'}" />
+                    </div>
+
+                    <div class="settings-row">
+                        <label style="min-width:120px">Paper bg</label>
+                        <input type="color" id="paper-bg" class="color-input" value="${theme.paperBg || '#fff'}" />
+                    </div>
+                    <div class="settings-row">
+                        <label style="min-width:120px">Paper text</label>
+                        <input type="color" id="paper-text" class="color-input" value="${theme.paperText || '#061124'}" />
+                    </div>
+
+                    <div class="settings-row">
+                        <label style="min-width:120px">Font</label>
+                        <select id="font-select" class="input">
+                            <option value="Inter" ${theme.siteFont==='Inter'?'selected':''}>Inter (Sans)</option>
+                            <option value="Roboto Slab" ${theme.siteFont==='Roboto Slab'?'selected':''}>Roboto Slab (Serif)</option>
+                            <option value="Noto Sans Bengali" ${theme.siteFont==='Noto Sans Bengali'?'selected':''}>Noto Sans Bengali</option>
+                            <option value="System" ${theme.siteFont==='System'?'selected':''}>System UI</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-top:12px;display:flex;gap:8px">
+                        <button class="btn" id="save-theme">Save</button>
+                        <button class="btn ghost" id="reset-theme">Reset</button>
+                    </div>
+                </div>
+            `;
+
+            // attach handlers
+            el('#theme-bg-file').addEventListener('change', async (ev)=>{
+                const f = ev.target.files[0];
+                if(!f) return;
+                const data = await fileToBase64(f);
+                theme.bgImage = data;
+                applyTheme(theme);
+            });
+            
+            el('#remove-bg').addEventListener('click', ()=>{
+                theme.bgImage = '';
+                applyTheme(theme);
+            });
+            
+            el('#save-theme').addEventListener('click', ()=>{
+                theme.bgColor1 = el('#bg1').value;
+                theme.bgColor2 = el('#bg2').value;
+                theme.primary = el('#primary-color').value;
+                theme.accent = el('#accent-color').value;
+                theme.textColor = el('#text-color').value;
+                theme.paperBg = el('#paper-bg').value;
+                theme.paperText = el('#paper-text').value;
+                const fsel = el('#font-select').value;
+                theme.siteFont = fsel;
+                // set font stack
+                if(fsel === 'Inter') theme.siteFontStack = `"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
+                else if(fsel === 'Roboto Slab') theme.siteFontStack = `"Roboto Slab", "Inter", serif`;
+                else if(fsel === 'Noto Sans Bengali') theme.siteFontStack = `"Noto Sans Bengali", "Inter", sans-serif`;
+                else theme.siteFontStack = `system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
+
+                applyTheme(theme);
+                showToast('Theme saved.', 'success');
+            });
+            
+            el('#reset-theme').addEventListener('click', ()=>{
+                theme = {
+                    bgImage: '',
+                    bgColor1: '#071029',
+                    bgColor2: '#0b2447',
+                    primary: '#6a11cb',
+                    accent: '#ffb86b',
+                    textColor: '#e6eef8',
+                    paperBg: '#fff',
+                    paperText: '#061124',
+                    siteFont: 'Inter',
+                    siteFontStack: `"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`
+                };
+                applyTheme(theme);
+                showToast('Theme reset.', 'success');
+                render();
+            });
+        }
+
+        /* ===========================
+           Small helpers
+           =========================== */
+        function getBackgroundPreview(elm){
+            const bg = elm.style.background || '';
+            const m = bg.match(/url\((['"]?)(.*?)\1\)/);
+            return m?m[2]:'';
+        }
+
+        /* ===========================
+           Boot
+           =========================== */
+        function boot(){
+            // load stored
+            users = load(STORAGE_KEYS.USERS, users);
+            posts = load(STORAGE_KEYS.POSTS, posts);
+            notice = load(STORAGE_KEYS.NOTICE, notice);
+            magazines = load(STORAGE_KEYS.MAGAZINES, magazines);
+            editions = load(STORAGE_KEYS.EDITIONS, editions);
+            theme = load(STORAGE_KEYS.THEME, theme);
+            
+            // Set current edition if exists
+            state.currentEdition = editions.find(e => e.status === 'draft') || null;
+            
+            applyTheme(theme);
+            refreshStats();
+            renderQuickCats();
+            render(); // initial
+
+            // small ephemeral notice
+            if(notice && notice.text){
+                const elNotice = document.createElement('div');
+                elNotice.style.position='fixed'; elNotice.style.right='18px'; elNotice.style.bottom='18px';
+                elNotice.className='notice';
+                elNotice.innerHTML = `<div style="font-weight:700">Notice</div><div class="small">${escapeHtml(notice.text)}</div>`;
+                document.body.appendChild(elNotice);
+                setTimeout(()=>elNotice.remove(), 11000);
+            }
+            
+            // Create particles for gaming effect
+            createParticles();
+        }
+        
+        boot();
+
+        /* ===========================
+           Utility: escape for inline use
+           =========================== */
+        window.escapeHtml = escapeHtml;
+
+        /* ===========================
+           Utility: allow keyboard ESC to close modal
+           =========================== */
+        document.addEventListener('keydown', (ev)=>{
+            if(ev.key === 'Escape'){
+                if(el('#viewer-modal').classList.contains('open')) closeViewer();
+            }
+        });
+
+        /* ===========================
+           Global functions
+           =========================== */
+        window.openCreateQuick = function(){ state.view='create'; render(); }
+        window.filterCat = filterCat;
+        window.viewPost = viewPost;
+        window.editPost = editPost;
+        window.deletePost = deletePost;
+        window.changeContentType = changeContentType;
+        window.changeAvatar = changeAvatar;
+        window.createNewEdition = createNewEdition;
+        window.closeCurrentEdition = closeCurrentEdition;
+        window.publishEdition = publishEdition;
+        window.viewEdition = viewEdition;
+        window.deleteUser = deleteUser;
+        window.toggleAdmin = toggleAdmin;
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
